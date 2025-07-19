@@ -1,0 +1,893 @@
+<html lang="fr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construire les Prestations - Multiflex Devis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .bg-primary { background-color: #263c89; }
+        .text-primary { color: #263c89; }
+        .border-primary { border-color: #263c89; }
+        .bg-success { background-color: #6db74c; }
+        .text-success { color: #6db74c; }
+        .bg-secondary { background-color: #F8F9FA; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.fixed{position:fixed}.relative{position:relative}.inset-0{inset:0px}.bottom-0{bottom:0px}.left-0{left:0px}.right-0{right:0px}.z-50{z-index:50}.mx-4{margin-left:1rem;margin-right:1rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.ml-2{margin-left:0.5rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-2{height:0.5rem}.h-24{height:6rem}.h-8{height:2rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.min-h-screen{min-height:100vh}.w-8{width:2rem}.w-full{width:100%}.w-11{width:2.75rem}.w-6{width:1.5rem}.max-w-lg{max-width:32rem}.flex-1{flex:1 1 0%}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-3{gap:0.75rem}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded{border-radius:0.25rem}.rounded-t-2xl{border-top-left-radius:1rem;border-top-right-radius:1rem}.border{border-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-opacity-50{--tw-bg-opacity:0.5}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-4{padding-left:1rem;padding-right:1rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pb-20{padding-bottom:5rem}.pb-4{padding-bottom:1rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.line-through{-webkit-text-decoration-line:line-through;text-decoration-line:line-through}.opacity-90{opacity:0.9}.opacity-50{opacity:0.5}.opacity-60{opacity:0.6}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:absolute::after{content:var(--tw-content);position:absolute}.after\:left-\[1px\]::after{content:var(--tw-content);left:1px}.after\:left-\[2px\]::after{content:var(--tw-content);left:2px}.after\:top-\[1px\]::after{content:var(--tw-content);top:1px}.after\:top-\[2px\]::after{content:var(--tw-content);top:2px}.after\:h-3::after{content:var(--tw-content);height:0.75rem}.after\:h-5::after{content:var(--tw-content);height:1.25rem}.after\:w-3::after{content:var(--tw-content);width:0.75rem}.after\:w-5::after{content:var(--tw-content);width:1.25rem}.after\:rounded-full::after{content:var(--tw-content);border-radius:9999px}.after\:bg-white::after{content:var(--tw-content);--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.after\:transition-all::after{content:var(--tw-content);transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:content-\[\'\'\]::after{--tw-content:'';content:var(--tw-content)}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.peer:checked ~ .peer-checked\:after\:translate-x-full::after{content:var(--tw-content);--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.peer:checked ~ .peer-checked\:after\:border-white::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.peer:focus ~ .peer-focus\:outline-none{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:my-8{margin-top:2rem;margin-bottom:2rem}.sm\:ml-3{margin-left:0.75rem}.sm\:mt-0{margin-top:0px}.sm\:block{display:block}.sm\:flex{display:flex}.sm\:w-auto{width:auto}.sm\:w-full{width:100%}.sm\:max-w-lg{max-width:32rem}.sm\:flex-row-reverse{flex-direction:row-reverse}.sm\:rounded-lg{border-radius:0.5rem}.sm\:p-0{padding:0px}.sm\:p-6{padding:1.5rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pb-4{padding-bottom:1rem}.sm\:align-middle{vertical-align:middle}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}</style></head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-primary text-white p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <button onclick="goBack()" class="text-white">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-lg font-bold">Construire les Prestations</h1>
+                <p class="text-sm opacity-90">Étape 2 sur 5</p>
+            </div>
+        </div>
+        <button class="text-white" onclick="showHelp()">
+            <i class="fas fa-question-circle text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="bg-white px-4 py-2">
+        <div class="flex justify-between text-xs text-gray-600 mb-2">
+            <span>Initialisation</span>
+            <span class="text-primary font-medium">Prestations</span>
+            <span>Finalisation</span>
+            <span>Conditions</span>
+            <span>Envoi</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Enhanced Summary Card -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    <i class="fas fa-clipboard-list mr-2 text-primary"></i>Récapitulatif du Devis
+                </h2>
+                <button id="toggleSummary" class="text-primary">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            <div id="summaryContent" class="space-y-4 text-sm">
+                <!-- Informations de base -->
+                <div class="bg-gray-50 p-3 rounded-lg space-y-2">
+                    <h4 class="font-medium text-gray-900 mb-2">Informations générales</h4>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Chantier :</span>
+                        <span id="summaryChantier" class="font-medium">Chantier Rénovation Salon - Mme ADA</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Type de devis :</span>
+                        <span id="summaryType" class="font-medium">Peinture</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Niveau de finition :</span>
+                        <span id="summaryLevel" class="font-medium">Finition A (Parfaite)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Type de revêtement :</span>
+                        <span id="summaryCovering" class="font-medium">Revêtement Mince</span>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-gray-600">Aspects :</span>
+                        <div id="summaryAspects" class="flex flex-wrap gap-1 ml-2"><span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Satinée Brillante</span><span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Velours</span><span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Mate</span></div>
+                    </div>
+                </div>
+
+                <!-- Modèle et template -->
+                <div class="bg-blue-50 p-3 rounded-lg">
+                    <h4 class="font-medium text-blue-900 mb-2">Modèle de devis</h4>
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-700">Statut :</span>
+                        <div id="templateStatus" class="font-semibold text-green-600">✅ Trouvé</div>
+                    </div>
+                    <div id="templateName" class="text-sm text-green-600 mt-1">Finition A - Revêtement Mince - Mate/Velours/Satinée (Complet)</div>
+                </div>
+
+                <!-- Totaux financiers -->
+                <div class="bg-primary/5 p-3 rounded-lg border border-primary/20">
+                    <h4 class="font-medium text-gray-900 mb-2">Totaux</h4>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Total HT :</span>
+                        <span id="summaryTotal" class="font-bold text-primary">335 522&nbsp;FCFA</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Durée estimée :</span>
+                        <span id="summaryDuration" class="font-medium text-success">39 jours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations List -->
+        <div class="mx-4 mt-4 space-y-3" id="operationsList"><div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden opacity-60">
+            <div class="p-4">
+                <!-- Header de l'accordéon -->
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-3 flex-1">
+                        
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" onchange="wizardManager.toggleOperation(0)" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        
+                        
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900">Pathologie du Support</h3>
+                            <p class="text-sm text-gray-500">14 tâche(s)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="font-bold text-primary">0&nbsp;FCFA</div>
+                            <div class="text-sm text-gray-500">HT</div>
+                        </div>
+                        
+                        <button id="toggleOperation_0" onclick="wizardManager.toggleOperationAccordion(0)" class="text-primary">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contenu de l'accordéon -->
+                <div id="operationContent_0" class="hierarchy-container" style="display: none">
+                    
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(0, 'TASK-HUMIDITE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(0, 'TASK-HUMIDITE', 'toggle')" class="sr-only peer" disabled="">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary opacity-50"></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Traitement d'Humidité (remontée capillaire)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                </div>
+            </div>
+        </div><div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ">
+            <div class="p-4">
+                <!-- Header de l'accordéon -->
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-3 flex-1">
+                        
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked="" onchange="wizardManager.toggleOperation(1)" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        
+                        
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900">Réparation des Fissures</h3>
+                            <p class="text-sm text-gray-500">5 tâche(s)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="font-bold text-primary">0&nbsp;FCFA</div>
+                            <div class="text-sm text-gray-500">HT</div>
+                        </div>
+                        
+                        <button id="toggleOperation_1" onclick="wizardManager.toggleOperationAccordion(1)" class="text-primary">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contenu de l'accordéon -->
+                <div id="operationContent_1" class="hierarchy-container" style="display: none">
+                    
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(1, 'TASK-PETITES-FISSURES')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(1, 'TASK-PETITES-FISSURES', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Petites et Moyennes Fissures (0.2 à 8mm)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(1, 'TASK-GRANDES-FISSURES')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(1, 'TASK-GRANDES-FISSURES', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Grandes Fissures</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                </div>
+            </div>
+        </div><div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ">
+            <div class="p-4">
+                <!-- Header de l'accordéon -->
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-3 flex-1">
+                        <i class="fas fa-lock text-gray-400 w-11 text-center"></i>
+                        
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900">Préparation du Support</h3>
+                            <p class="text-sm text-gray-500">10 tâche(s)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="font-bold text-primary">194 668&nbsp;FCFA</div>
+                            <div class="text-sm text-gray-500">HT</div>
+                        </div>
+                        
+                        <button id="toggleOperation_2" onclick="wizardManager.toggleOperationAccordion(2)" class="text-primary">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contenu de l'accordéon -->
+                <div id="operationContent_2" class="hierarchy-container" style="display: none">
+                    
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-PROTECTION')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Protection des Meubles et Appareillages</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">46 350&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-DEFAUTS')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(2, 'TASK-DEFAUTS', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Rattraper les Défauts (&gt; 5mm)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-EGRENAGE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Égrenage</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">9 270&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-EPOUSSETAGE-1')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Époussetage (après égrenage)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">2 575&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-REBOUCHAGE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Rebouchage</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">9 270&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(2, 'TASK-ENDUIT-REPASSE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Enduit Repassé (Finition A)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">127 203&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                </div>
+            </div>
+        </div><div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden ">
+            <div class="p-4">
+                <!-- Header de l'accordéon -->
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-3 flex-1">
+                        <i class="fas fa-lock text-gray-400 w-11 text-center"></i>
+                        
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900">Revêtement</h3>
+                            <p class="text-sm text-gray-500">7 tâche(s)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="font-bold text-primary">140 854&nbsp;FCFA</div>
+                            <div class="text-sm text-gray-500">HT</div>
+                        </div>
+                        
+                        <button id="toggleOperation_3" onclick="wizardManager.toggleOperationAccordion(3)" class="text-primary">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contenu de l'accordéon -->
+                <div id="operationContent_3" class="hierarchy-container" style="display: none">
+                    
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-IMPRESSION-MINCE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Impression (Revêtement Mince)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">47 482&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-INTERMEDIAIRE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Couche Intermédiaire (Finition A)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">46 932&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-REVISION')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Révision (Finition A)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">18 540&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-MATE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-MATE', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Couche de Finition (Mate)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-VELOURS')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-VELOURS', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Couche de Finition (Velours)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 opacity-50">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-SATINEE')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" onchange="wizardManager.toggleHierarchyNode(3, 'TASK-COUCHE-FINITION-SATINEE', 'toggle')" class="sr-only peer">
+                                    <div class="w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary "></div>
+                                </label>
+                            
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 line-through">Couche de Finition (Satinée Brillante)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        <span class="text-blue-600">Optionnel</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium line-through text-gray-400">0&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                <div class="hierarchy-item mb-2" style="margin-left: 0px;">
+                    <div class="flex items-center justify-between p-3 rounded bg-blue-50 ">
+                        <div class="flex items-center space-x-3 flex-1">
+                            <!-- Bouton expand/collapse pour les noeuds avec enfants -->
+                            
+                                <button onclick="wizardManager.toggleHierarchyNode(3, 'TASK-VERNIS-PROTECTION')" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            
+                            
+                            <!-- Switch pour les noeuds optionnels -->
+                            <i class="fas fa-lock text-gray-400 w-8 text-center text-xs"></i>
+                            
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900 ">Vernis de Protection - 2 Couches (Finition A)</div>
+                                
+                                    <div class="text-sm text-gray-500">
+                                        Obligatoire
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="text-right">
+                            
+                                <div class="font-medium ">27 900&nbsp;FCFA</div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Enfants dépliables -->
+                    
+                </div>
+            
+                </div>
+            </div>
+        </div></div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Actions Rapides</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="activateAllOptional()" class="flex items-center justify-center px-4 py-3 bg-success text-white rounded-lg font-medium">
+                    <i class="fas fa-check-double mr-2"></i>
+                    Tout Activer
+                </button>
+                <button onclick="deactivateAllOptional()" class="flex items-center justify-center px-4 py-3 bg-gray-500 text-white rounded-lg font-medium">
+                    <i class="fas fa-times-circle mr-2"></i>
+                    Désactiver Optionnels
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Spacer -->
+        <div class="h-24"></div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div class="flex space-x-3">
+            <button onclick="goBack()" class="flex-1 py-3 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Précédent
+            </button>
+            <button id="nextButton" onclick="goToStep3()" class="flex-1 py-3 px-4 bg-primary text-white rounded-lg font-medium">
+                Suivant : Finalisation
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0" onclick="closeTaskModal()"></div>
+            <div class="inline-block w-full max-w-lg bg-white rounded-t-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-lg">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 id="taskModalTitle" class="text-lg font-semibold text-gray-900"></h3>
+                        <button onclick="closeTaskModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="taskModalContent" class="space-y-4">
+                        <!-- Content will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button onclick="saveTaskChanges()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Sauvegarder
+                    </button>
+                    <button onclick="closeTaskModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <span class="text-gray-700 font-medium">Calcul en cours...</span>
+        </div>
+    </div>
+
+ </body></html>
