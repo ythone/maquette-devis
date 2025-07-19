@@ -7,6 +7,8 @@
 let currentQuotation = null;
 let quotationId = null;
 
+
+
 // === Initialisation ===
 document.addEventListener('DOMContentLoaded', function() {
     initializeDetailPage();
