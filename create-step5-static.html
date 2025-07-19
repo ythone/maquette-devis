@@ -1,0 +1,1641 @@
+<html lang="fr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prévisualisation et Envoi - Multiflex Devis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .bg-primary { background-color: #263c89; }
+        .text-primary { color: #263c89; }
+        .border-primary { border-color: #263c89; }
+        .bg-success { background-color: #6db74c; }
+        .text-success { color: #6db74c; }
+        .bg-warning { background-color: #F0AD4E; }
+        .text-warning { color: #F0AD4E; }
+        .bg-danger { background-color: #D9534F; }
+        .text-danger { color: #D9534F; }
+        .bg-secondary { background-color: #F8F9FA; }
+        
+        /* Styles pour la prévisualisation PDF */
+        .pdf-preview {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .pdf-header {
+            border-bottom: 3px solid #263c89;
+        }
+        .pdf-section {
+            page-break-inside: avoid;
+        }
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .pdf-table th, .pdf-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .pdf-table th {
+            background-color: #263c89;
+            color: white;
+            font-weight: bold;
+        }
+        .pdf-total-row {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        /* Styles mobile pour les prestations */
+        .service-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .service-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .service-header {
+            background: linear-gradient(135deg, #263c89 0%, #1a2d61 100%);
+        }
+        .service-item {
+            transition: background-color 0.2s ease;
+        }
+        .service-item:hover {
+            background-color: #f8f9fa;
+        }
+        .price-highlight {
+            color: #263c89;
+            font-weight: 600;
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 640px) {
+            .service-card {
+                margin: 0 -4px;
+            }
+            .pdf-preview {
+                font-size: 12px;
+            }
+            .flex.justify-between {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .flex.justify-between .text-right {
+                align-self: flex-end;
+            }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.inset-0{inset:0px}.bottom-0{bottom:0px}.left-0{left:0px}.right-0{right:0px}.z-50{z-index:50}.mx-4{margin-left:1rem;margin-right:1rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-2{margin-left:0.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.ml-3{margin-left:0.75rem}.ml-4{margin-left:1rem}.mt-2{margin-top:0.5rem}.mt-8{margin-top:2rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-2{height:0.5rem}.h-24{height:6rem}.h-8{height:2rem}.h-16{height:4rem}.min-h-screen{min-height:100vh}.w-12{width:3rem}.w-8{width:2rem}.w-full{width:100%}.w-16{width:4rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.transform-gpu{transform:translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-2{gap:0.5rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(229 231 235 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-b{border-bottom-width:1px}.border-t-2{border-top-width:2px}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-50{--tw-bg-opacity:1;background-color:rgb(254 252 232 / var(--tw-bg-opacity, 1))}.bg-opacity-50{--tw-bg-opacity:0.5}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-2{padding:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.pb-2{padding-bottom:0.5rem}.pb-4{padding-bottom:1rem}.pt-2{padding-top:0.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-700{--tw-text-opacity:1;color:rgb(161 98 7 / var(--tw-text-opacity, 1))}.text-yellow-800{--tw-text-opacity:1;color:rgb(133 77 14 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.opacity-90{opacity:0.9}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.hover\:bg-yellow-600:hover{--tw-bg-opacity:1;background-color:rgb(202 138 4 / var(--tw-bg-opacity, 1))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}</style></head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-primary text-white p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <button onclick="goBack()" class="text-white">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-lg font-bold">Prévisualisation et Envoi</h1>
+                <p class="text-sm opacity-90">Étape 5 sur 5</p>
+            </div>
+        </div>
+        <button class="text-white" onclick="showHelp()">
+            <i class="fas fa-question-circle text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="bg-white px-4 py-2">
+        <div class="flex justify-between text-xs text-gray-600 mb-2">
+            <span>Initialisation</span>
+            <span>Prestations</span>
+            <span>Finalisation</span>
+            <span>Conditions</span>
+            <span class="text-primary font-medium">Envoi</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-primary h-2 rounded-full" style="width: 100%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Statut et Actions -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Statut du Devis</h2>
+                <div id="quotationStatus" class="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">Brouillon</div>
+            </div>
+            
+            <div id="validationInfo" class="space-y-3">
+                <div class="bg-success text-white p-3 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span class="font-medium">Prêt pour Envoi Direct</span>
+                    </div>
+                    <div class="text-sm opacity-90 mt-1">
+                        Ce devis peut être envoyé directement au client.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Principales -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Actions</h2>
+            
+            <div class="grid grid-cols-1 gap-3">
+                <!-- Bouton principal - varie selon le contexte -->
+                <button id="primaryAction" onclick="executePrimaryAction()" class="w-full py-4 px-6 rounded-lg font-bold text-lg bg-primary text-white">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    <span id="primaryActionText">Générer et Envoyer</span>
+                </button>
+                
+                <!-- Actions secondaires -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="previewPDF()" class="py-3 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium">
+                        <i class="fas fa-eye mr-2"></i>
+                        Aperçu Complet
+                    </button>
+                    <button onclick="saveDraft()" class="py-3 px-4 bg-gray-100 text-gray-700 rounded-lg font-medium">
+                        <i class="fas fa-save mr-2"></i>
+                        Sauvegarder
+                    </button>
+                </div>
+                
+                <!-- Actions de modification -->
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    <div class="text-sm text-gray-600 mb-2">Besoin de modifications ?</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="goToStep(3)" class="py-2 px-4 border border-gray-300 text-gray-700 rounded-lg text-sm">
+                            <i class="fas fa-calculator mr-1"></i>
+                            Revoir Prix
+                        </button>
+                        <button onclick="goToStep(4)" class="py-2 px-4 border border-gray-300 text-gray-700 rounded-lg text-sm">
+                            <i class="fas fa-edit mr-1"></i>
+                            Modifier Conditions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aperçu Résumé -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Résumé du Devis</h2>
+                <button onclick="toggleSummary()" class="text-primary">
+                    <i id="summaryToggleIcon" class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            
+            <div id="summaryContent" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-600">N° Devis :</span>
+                        <span id="quotationNumber" class="font-medium ml-2">AMB-PAUL-001-2024</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Client :</span>
+                        <span id="clientName" class="font-medium ml-2">Madame ADA NGUIFOU</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Chantier :</span>
+                        <span id="siteName" class="font-medium ml-2">Chantier Rénovation Salon - Mme ADA</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-600">Type :</span>
+                        <span id="quotationType" class="font-medium ml-2">-</span>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-200 pt-4">
+                    <div class="flex justify-between items-center text-lg">
+                        <span class="font-semibold">Total HT :</span>
+                        <span id="totalAmount" class="font-bold text-primary">335 522&nbsp;FCFA</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm text-gray-600 mt-1">
+                        <span>Délai :</span>
+                        <span id="deliveryTime">39 jours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prévisualisation PDF -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Aperçu PDF</h2>
+                <div class="flex space-x-2">
+                    <button onclick="zoomOut()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span id="zoomLevel" class="text-sm text-gray-600">100%</span>
+                    <button onclick="zoomIn()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-sm text-gray-600 mb-3">
+                Aperçu de votre devis tel qu'il apparaîtra pour le client :
+            </div>
+            
+            <div id="pdfPreviewContainer" class="border border-gray-300 rounded-lg overflow-hidden">
+                <div id="pdfPreview" class="pdf-preview p-6 transform-gpu transition-transform" style="transform: scale(1);">
+            <!-- En-tête -->
+            <div class="pdf-header flex justify-between items-start mb-6 pb-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        T
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-primary">DEVIS</h1>
+                        <p class="text-lg font-semibold">AMB-PAUL-001-2024</p>
+                        <p class="text-sm text-gray-600">
+                            ETS BATI PRO SERVICES
+                        </p>
+                    </div>
+                </div>
+                <div class="text-right text-sm">
+                    <p><strong>Date d'émission :</strong> 19/07/2025</p>
+                    <p><strong>Valable jusqu'au :</strong> 18/08/2025</p>
+                    <p><strong>Délai d'exécution :</strong> 0 jours ouvrés</p>
+                </div>
+            </div>
+
+            <!-- Informations Client -->
+            <div class="pdf-section mb-6">
+                <h2 class="text-lg font-bold text-primary border-b border-primary pb-2 mb-3">CLIENT</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <p><strong>Nom :</strong> Madame ADA NGUIFOU</p>
+                        <p><strong>Téléphone :</strong> +237677889900</p>
+                        <p><strong>Email :</strong> ada.nguifou@email.cm</p>
+                    </div>
+                    <div>
+                        <p><strong>Chantier :</strong> Chantier Rénovation Salon - Mme ADA</p>
+                        <p><strong>Adresse :</strong> 123 Rue de la Liberté, Douala, Cameroun</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Détail des Prestations -->
+            <div class="pdf-section mb-6">
+                <h2 class="text-lg font-bold text-primary border-b border-primary pb-2 mb-3">PRESTATIONS</h2>
+                
+            <div class="space-y-4">
+        
+                    <div class="service-card border border-gray-200 rounded-lg overflow-hidden bg-white">
+                        <div class="service-header text-white px-4 py-3">
+                            <h3 class="font-bold text-lg">Réparation des Fissures</h3>
+                            
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Agrandir la Fissure et la Dépoussiérer</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 350&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 ml × 450&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Agrandir la Fissure et la Dépoussiérer</span>
+                        <div class="text-gray-500 text-xs">PROC-FISSURE-AGRANDIR-PM</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 ML × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Reboucher la Fissure avec le EN 8000 ACRYLASTIC</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 350&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 ml × 450&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Reboucher avec EN 8000 ACRYLASTIC</span>
+                        <div class="text-gray-500 text-xs">PROC-FISSURE-REBOUCHER-8000</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 ML × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Agrandir la Fissure et Réaliser des Saignées Transversales</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">92 700&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 ml × 900&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Agrandir et Réaliser des Saignées Transversales</span>
+                        <div class="text-gray-500 text-xs">PROC-FISSURE-AGRANDIR-GF</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">47 700&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 ML × 900&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Fabriquer et Mettre une Armature</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">92 700&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 ml × 900&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Fabriquer et Mettre une Armature</span>
+                        <div class="text-gray-500 text-xs">PROC-FISSURE-ARMATURE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">47 700&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 ML × 900&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Reboucher avec Ciment Colle Blanc + Bande Grillagée</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">139 050&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 ml × 1 350&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Reboucher avec Ciment Colle + Bande Grillagée</span>
+                        <div class="text-gray-500 text-xs">PROC-FISSURE-CIMENT-GRILLAGE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">71 550&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 ML × 1 350&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                        </div>
+                        <div class="bg-gray-100 px-4 py-3 flex justify-between items-center">
+                            <span class="font-medium text-gray-900">Total Réparation des Fissures</span>
+                            <span class="price-highlight font-bold text-lg">417 150&nbsp;FCFA</span>
+                        </div>
+                    </div>
+                
+                    <div class="service-card border border-gray-200 rounded-lg overflow-hidden bg-white">
+                        <div class="service-header text-white px-4 py-3">
+                            <h3 class="font-bold text-lg">Préparation du Support</h3>
+                            
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Protéger les Meubles et les Appareillages</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 350&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Protéger les Meubles et les Appareillages</span>
+                        <div class="text-gray-500 text-xs">PROC-PREP-PROTECTION</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Rattraper les Défauts avec le Ciment Colle Blanc</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 950&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 2 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (2)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rattraper les Défauts avec le Ciment Colle Blanc</span>
+                        <div class="text-gray-500 text-xs">PROC-PREP-DEFAUTS</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">CIMENT COLLE BLANC 20kg</span>
+                        <div class="text-gray-500 text-xs">CC-BLANC-20</div>
+                        <div class="text-blue-600 text-xs">Estimé: 10, Sécurité: +2</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">600&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            12 KG × 50&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Égrenage</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">9 270&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 90&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Égrenage</span>
+                        <div class="text-gray-500 text-xs">PROC-PREP-EGRENAGE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">4 770&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 90&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Époussetage</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">2 575&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 25&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Époussetage</span>
+                        <div class="text-gray-500 text-xs">PROC-PREP-EPOUSSETAGE-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 325&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Rebouchage</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">9 270&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 90&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rebouchage</span>
+                        <div class="text-gray-500 text-xs">PROC-PREP-REBOUCHAGE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">4 770&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 90&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Ponçage (Enduit Repassé)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">9 270&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 90&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Ponçage (Enduit Repassé)</span>
+                        <div class="text-gray-500 text-xs">PROC-ENDUIT-PONCAGE-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">4 770&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 90&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Époussetage (après Ponçage Initial)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">2 575&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 25&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Époussetage (après Ponçage Initial)</span>
+                        <div class="text-gray-500 text-xs">PROC-ENDUIT-EPOUSSETAGE-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 325&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Enduit Coloré (Finition A)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">78 278&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 750&nbsp;FCFA
+                                              + 2 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (2)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Application Enduit Coloré</span>
+                        <div class="text-gray-500 text-xs">PROC-ENDUIT-COLORE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">39 750&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 750&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">EM 1500 MULTICOAT 25kg</span>
+                        <div class="text-gray-500 text-xs">EM-1500-25</div>
+                        <div class="text-blue-600 text-xs">Estimé: 3, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 028&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            4 KG × 257&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Ponçage (après Enduit Coloré)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">18 540&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 180&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Ponçage (après Enduit Coloré)</span>
+                        <div class="text-gray-500 text-xs">PROC-ENDUIT-PONCAGE-2</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">9 540&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 180&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Époussetage Final (Enduit Repassé)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">18 540&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 180&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Époussetage Final (Enduit Repassé)</span>
+                        <div class="text-gray-500 text-xs">PROC-ENDUIT-EPOUSSETAGE-2</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">9 540&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 180&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                        </div>
+                        <div class="bg-gray-100 px-4 py-3 flex justify-between items-center">
+                            <span class="font-medium text-gray-900">Total Préparation du Support</span>
+                            <span class="price-highlight font-bold text-lg">241 618&nbsp;FCFA</span>
+                        </div>
+                    </div>
+                
+                    <div class="service-card border border-gray-200 rounded-lg overflow-hidden bg-white">
+                        <div class="service-header text-white px-4 py-3">
+                            <h3 class="font-bold text-lg">Revêtement</h3>
+                            
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Impression (Revêtement Mince)</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">47 482&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 3 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (3)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Impression (Revêtement Mince)</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-IMPRESSION-MINCE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">IM 2000 MULTIPRIM 25kg</span>
+                        <div class="text-gray-500 text-xs">IM-2000-25</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 082&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 KG × 541&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rouleau laqueur 180mm</span>
+                        <div class="text-gray-500 text-xs">ROULEAU-180-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">50&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 PCS × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Couche Intermédiaire</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 932&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 3 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (3)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Couche Intermédiaire</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-COUCHE-INTER</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">MI 300 30kg</span>
+                        <div class="text-gray-500 text-xs">MI-300-30</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">532&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 KG × 266&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rouleau laqueur 180mm</span>
+                        <div class="text-gray-500 text-xs">ROULEAU-180-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">50&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 PCS × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Révision</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">18 540&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 180&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Révision</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-REVISION</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">9 540&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 180&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Couche de Finition Mate</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">46 932&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 3 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (3)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Couche de Finition (Revêtement Mince)</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-FINITION-MINCE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">MI 300 30kg</span>
+                        <div class="text-gray-500 text-xs">MI-300-30</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">532&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 KG × 266&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rouleau laqueur 180mm</span>
+                        <div class="text-gray-500 text-xs">ROULEAU-180-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">50&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 PCS × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Couche de Finition Velours</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">47 640&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 3 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (3)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Couche de Finition (Revêtement Mince)</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-FINITION-MINCE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">ME 1900 VELOURS 25kg</span>
+                        <div class="text-gray-500 text-xs">ME-1900-25</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 240&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 KG × 620&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rouleau laqueur 180mm</span>
+                        <div class="text-gray-500 text-xs">ROULEAU-180-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">50&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 PCS × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Couche de Finition Satinée</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">47 642&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 450&nbsp;FCFA
+                                              + 3 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (3)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Couche de Finition (Revêtement Mince)</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-FINITION-MINCE</div>
+                        <div class="text-blue-600 text-xs">Estimé: 50, Sécurité: +3</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">23 850&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            53 M2 × 450&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">ME 6000 SATIN 25kg</span>
+                        <div class="text-gray-500 text-xs">ME-6000-25</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">1 242&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 KG × 621&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Rouleau laqueur 180mm</span>
+                        <div class="text-gray-500 text-xs">ROULEAU-180-1</div>
+                        <div class="text-blue-600 text-xs">Estimé: 1, Sécurité: +1</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">50&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            2 PCS × 25&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                             <div class="service-item p-4 bg-gray-50">
+                                 <div class="flex justify-between items-start mb-2">
+                                     <div class="flex-1">
+                                         <h4 class="font-medium text-gray-900">Vernis de Protection, 2 Couches</h4>
+                                         
+                                     </div>
+                                     <div class="text-right ml-4">
+                                         <div class="price-highlight font-bold">27 900&nbsp;FCFA</div>
+                                         <div class="text-xs text-gray-500">
+                                             50 m2 × 180&nbsp;FCFA
+                                              + 1 produit(s)
+                                         </div>
+                                     </div>
+                                 </div>
+                                
+                                <!-- Produits liés -->
+                                
+            <div class="mt-3 pt-3 border-t border-gray-200">
+                <h5 class="text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-box mr-1"></i>
+                    Produits inclus (1)
+                </h5>
+                <div class="space-y-2">
+        
+                <div class="flex justify-between items-start text-sm bg-gray-50 p-2 rounded">
+                    <div class="flex-1">
+                        <span class="text-gray-800 font-medium">Vernis de Protection, 2 Couches</span>
+                        <div class="text-gray-500 text-xs">PROC-REV-VERNIS</div>
+                        <div class="text-blue-600 text-xs">Estimé: 100, Sécurité: +5</div>
+                    </div>
+                    <div class="text-right ml-3">
+                        <div class="font-medium text-primary">18 900&nbsp;FCFA</div>
+                        <div class="text-xs text-gray-500">
+                            105 M2 × 180&nbsp;FCFA
+                        </div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+        
+                            </div>
+                        
+                        </div>
+                        <div class="bg-gray-100 px-4 py-3 flex justify-between items-center">
+                            <span class="font-medium text-gray-900">Total Revêtement</span>
+                            <span class="price-highlight font-bold text-lg">283 068&nbsp;FCFA</span>
+                        </div>
+                    </div>
+                
+            </div>
+        
+            </div>
+
+            <!-- Récapitulatif Financier -->
+            <div class="pdf-section mb-6">
+                <h2 class="text-lg font-bold text-primary border-b border-primary pb-2 mb-3">RÉCAPITULATIF FINANCIER</h2>
+                
+            <div class="space-y-2">
+                <div class="flex justify-between">
+                    <span>Sous-total HT :</span>
+                    <span class="font-medium">335 522&nbsp;FCFA</span>
+                </div>
+                
+                <div class="flex justify-between font-bold text-lg border-t pt-2">
+                    <span>Total HT :</span>
+                    <span>335 522&nbsp;FCFA</span>
+                </div>
+                <div class="text-sm text-gray-600">
+                    <p>TVA : Non applicable (Exonération Multiflex)</p>
+                </div>
+                
+                    <div class="mt-4 pt-2 border-t border-gray-300">
+                        <div class="flex justify-between text-sm">
+                            <span>Acompte à la commande :</span>
+                            <span class="font-medium">100 657&nbsp;FCFA</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Solde à livraison :</span>
+                            <span class="font-medium">234 865&nbsp;FCFA</span>
+                        </div>
+                    </div>
+                
+            </div>
+        
+            </div>
+
+            <!-- Conditions -->
+            
+            <div class="pdf-section mb-6">
+                <h2 class="text-lg font-bold text-primary border-b border-primary pb-2 mb-3">CONDITIONS</h2>
+        
+                <div class="mb-4">
+                    <h3 class="font-bold text-gray-900 mb-2">GARANTIE</h3>
+                    <p class="text-sm">Garantie de 12 mois sur les travaux de peinture.</p>
+                    
+                </div>
+            
+                <div class="mb-4">
+                    <h3 class="font-bold text-gray-900 mb-2">CONDITIONS PARTICULIÈRES</h3>
+                    <div class="text-sm whitespace-pre-line">Préparation du support:
+• Nettoyage préalable des surfaces par le client
+• Protection des meubles et objets de valeur
+• Déplacement des éléments mobiles
+• Support sec et propre avant intervention</div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            
+            <div class="pdf-section mb-6">
+                <h2 class="text-lg font-bold text-primary border-b border-primary pb-2 mb-3">CERTIFICATIONS</h2>
+                <div class="flex flex-wrap gap-2">
+                    
+                        <span class="inline-flex items-center px-3 py-1 bg-primary text-white text-sm rounded">
+                            <i class="fas fa-award mr-2"></i>Spécialiste Peinture Décorative
+                        </span>
+                    
+                        <span class="inline-flex items-center px-3 py-1 bg-primary text-white text-sm rounded">
+                            <i class="fas fa-award mr-2"></i>Applicateur Certifié Multiflex N2
+                        </span>
+                    
+                </div>
+            </div>
+        
+
+            <!-- Médias -->
+            
+
+            <!-- Signature -->
+            <div class="pdf-section mt-8 pt-4 border-t-2 border-primary">
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <p class="font-bold">Le Client</p>
+                        <p class="text-sm text-gray-600 mt-1">(Bon pour accord, précédé de la mention "Lu et approuvé")</p>
+                        <div class="h-16 border-b border-gray-300 mt-4"></div>
+                        <p class="text-sm mt-2">Date et Signature</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="font-bold">Le Technicien</p>
+                        <p class="text-sm text-gray-600 mt-1">Technicien Ambassadeur Multiflex</p>
+                        <div class="h-16 border-b border-gray-300 mt-4"></div>
+                        <p class="text-sm mt-2">Date et Signature</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            
+            <div class="mt-3 text-xs text-gray-500 bg-blue-50 p-3 rounded">
+                <i class="fas fa-info-circle mr-2"></i>
+                Ceci est un aperçu web. Le PDF final aura un formatage optimisé pour l'impression.
+            </div>
+        </div>
+
+        <!-- Bottom Spacer -->
+        <div class="h-24"></div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div class="flex space-x-3">
+            <button onclick="goBack()" class="flex-1 py-3 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Précédent
+            </button>
+            <button id="bottomPrimaryAction" onclick="executePrimaryAction()" class="flex-1 py-3 px-4 bg-primary text-white rounded-lg font-medium">
+                <span id="bottomPrimaryActionText">Générer et Envoyer</span>
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Validation Required Modal -->
+    <div id="validationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-exclamation-triangle text-warning text-2xl mr-3"></i>
+                    <h3 class="text-lg font-semibold">Validation Requise</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div id="validationReasons" class="text-sm text-gray-600">
+                        <!-- Raisons de la validation seront listées ici -->
+                    </div>
+                    
+                    <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+                        <p class="font-medium text-yellow-800">Ce devis nécessite une validation managériale avant envoi.</p>
+                        <p class="text-yellow-700 mt-1">Il sera soumis à votre responsable qui pourra l'approuver ou demander des modifications.</p>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button onclick="closeValidationModal()" class="flex-1 py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            Annuler
+                        </button>
+                        <button onclick="submitForValidation()" class="flex-1 py-2 px-4 bg-warning text-white rounded-lg hover:bg-yellow-600">
+                            Soumettre pour Validation
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-success mb-4">
+                        <i class="fas fa-check text-white text-xl"></i>
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Devis Créé avec Succès!</h3>
+                    
+                    <div id="successMessage" class="text-sm text-gray-600 mb-6">
+                        <!-- Message de succès sera affiché ici -->
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <button onclick="shareQuotation()" class="py-3 px-4 bg-primary text-white rounded-lg font-medium">
+                            <i class="fas fa-share mr-2"></i>
+                            Partager le Devis
+                        </button>
+                        <button onclick="goToQuotationsList()" class="py-2 px-4 border border-gray-300 text-gray-700 rounded-lg">
+                            Retour à la Liste
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <span id="loadingText" class="text-gray-700 font-medium">Génération en cours...</span>
+        </div>
+    </div>
+
+ </body></html>
