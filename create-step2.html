@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construire les Prestations - Multiflex Devis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .bg-primary { background-color: #263c89; }
+        .text-primary { color: #263c89; }
+        .border-primary { border-color: #263c89; }
+        .bg-success { background-color: #6db74c; }
+        .text-success { color: #6db74c; }
+        .bg-secondary { background-color: #F8F9FA; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-primary text-white p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <button onclick="goBack()" class="text-white">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-lg font-bold">Construire les Prestations</h1>
+                <p class="text-sm opacity-90">Étape 2 sur 5</p>
+            </div>
+        </div>
+        <button class="text-white" onclick="showHelp()">
+            <i class="fas fa-question-circle text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="bg-white px-4 py-2">
+        <div class="flex justify-between text-xs text-gray-600 mb-2">
+            <span>Initialisation</span>
+            <span class="text-primary font-medium">Prestations</span>
+            <span>Finalisation</span>
+            <span>Conditions</span>
+            <span>Envoi</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Enhanced Summary Card -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    <i class="fas fa-clipboard-list mr-2 text-primary"></i>Récapitulatif du Devis
+                </h2>
+                <button id="toggleSummary" class="text-primary">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            <div id="summaryContent" class="space-y-4 text-sm">
+                <!-- Informations de base -->
+                <div class="bg-gray-50 p-3 rounded-lg space-y-2">
+                    <h4 class="font-medium text-gray-900 mb-2">Informations générales</h4>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Chantier :</span>
+                        <span id="summaryChantier" class="font-medium">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Type de devis :</span>
+                        <span id="summaryType" class="font-medium">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Niveau de finition :</span>
+                        <span id="summaryLevel" class="font-medium">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Type de revêtement :</span>
+                        <span id="summaryCovering" class="font-medium">-</span>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-gray-600">Aspects :</span>
+                        <div id="summaryAspects" class="flex flex-wrap gap-1 ml-2">-</div>
+                    </div>
+                </div>
+
+                <!-- Modèle et template -->
+                <div class="bg-blue-50 p-3 rounded-lg">
+                    <h4 class="font-medium text-blue-900 mb-2">Modèle de devis</h4>
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-700">Statut :</span>
+                        <div id="templateStatus" class="font-semibold">-</div>
+                    </div>
+                    <div id="templateName" class="text-sm mt-1">-</div>
+                </div>
+
+                <!-- Totaux financiers -->
+                <div class="bg-primary/5 p-3 rounded-lg border border-primary/20">
+                    <h4 class="font-medium text-gray-900 mb-2">Totaux</h4>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Total HT :</span>
+                        <span id="summaryTotal" class="font-bold text-primary">0 FCFA</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Durée estimée :</span>
+                        <span id="summaryDuration" class="font-medium text-success">0 jours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations List -->
+        <div class="mx-4 mt-4 space-y-3" id="operationsList">
+            <!-- Operations will be rendered here -->
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Actions Rapides</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="activateAllOptional()" class="flex items-center justify-center px-4 py-3 bg-success text-white rounded-lg font-medium">
+                    <i class="fas fa-check-double mr-2"></i>
+                    Tout Activer
+                </button>
+                <button onclick="deactivateAllOptional()" class="flex items-center justify-center px-4 py-3 bg-gray-500 text-white rounded-lg font-medium">
+                    <i class="fas fa-times-circle mr-2"></i>
+                    Désactiver Optionnels
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Spacer -->
+        <div class="h-24"></div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div class="flex space-x-3">
+            <button onclick="goBack()" class="flex-1 py-3 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Précédent
+            </button>
+            <button id="nextButton" onclick="goToStep3()" class="flex-1 py-3 px-4 bg-primary text-white rounded-lg font-medium">
+                Suivant : Finalisation
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0" onclick="closeTaskModal()"></div>
+            <div class="inline-block w-full max-w-lg bg-white rounded-t-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-lg">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 id="taskModalTitle" class="text-lg font-semibold text-gray-900"></h3>
+                        <button onclick="closeTaskModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="taskModalContent" class="space-y-4">
+                        <!-- Content will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button onclick="saveTaskChanges()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Sauvegarder
+                    </button>
+                    <button onclick="closeTaskModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <span class="text-gray-700 font-medium">Calcul en cours...</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="models/devis-models.js"></script>
+    <script src="data/devis-mock-data.js"></script>
+    <script src="js/wizard-step2.js"></script>
+</body>
+</html> 

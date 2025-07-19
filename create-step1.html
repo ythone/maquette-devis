@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MultiFlex - Nouveau Devis - Étape 1</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = {
+            autoReplaceSvg: 'nest',
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Base Styles -->
+    <style>
+        * {
+            font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Optimise les performances d'animation sur mobile */
+        * {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        /* Masquer la scrollbar tout en gardant la fonctionnalité */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Empêcher le texte d'être sélectionné sur les éléments d'UI */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Assurez-vous que tous les boutons et zones touch ont une taille minimale */
+        button, .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Styles pour les étapes du wizard */
+        .step-indicator {
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #e4e7f0;
+            transform: translate(-50%, -50%);
+        }
+        .step-indicator.active::before {
+            background-color: #263c89;
+        }
+        .step-indicator.completed::before {
+            background-color: #6db74c;
+        }
+        .step-indicator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background-color: #e4e7f0;
+            transform: translateY(-50%);
+        }
+        .step-indicator.completed::after {
+            background-color: #6db74c;
+        }
+        
+        /* Validation errors */
+        .field-error {
+            border-color: #D9534F !important;
+            background-color: #fef2f2 !important;
+        }
+        .error-message {
+            color: #D9534F;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Multi-select chips */
+        .aspect-chip {
+            transition: all 0.2s ease;
+        }
+        .aspect-chip.selected {
+            background-color: #263c89;
+            color: white;
+        }
+        .aspect-chip:not(.selected) {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        /* Chantier card */
+        .chantier-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .chantier-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .chantier-card.selected {
+            border-color: #263c89;
+            background-color: #f8f9ff;
+        }
+    </style>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#263c89',
+                        'primaryDark': '#1D2C61',
+                        'primaryLight': '#A8B1D3',
+                        'secondary': '#6db74c',
+                        'neutral': '#F8F9FA',
+                        'textPrimary': '#1A1A1A',
+                        'textSecondary': '#666666',
+                        'border': '#DEE2E6',
+                        'fieldDisabled': '#e4e7f0',
+                        'success': '#6db74c',
+                        'error': '#D9534F',
+                        'warning': '#F0AD4E',
+                        'info': '#0D6EFD'
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+
+<body class="bg-neutral min-h-screen">
+    <!-- AppBar -->
+    <div class="bg-primary text-white shadow-lg relative z-30">
+        <div class="flex items-center justify-between px-4 py-3">
+            <!-- Navigation -->
+            <div class="flex items-center space-x-3">
+                <button onclick="goBack()" class="p-2 -ml-2 rounded-lg hover:bg-primaryDark transition-colors touch-target">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="text-lg font-bold">Nouveau Devis</h1>
+                    <p class="text-sm text-primaryLight">Étape 1 sur 5 - Initialisation</p>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex items-center space-x-2">
+                <button onclick="saveDraft()" class="p-2 rounded-lg hover:bg-primaryDark transition-colors touch-target" title="Sauvegarder en brouillon">
+                    <i class="fas fa-save text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicateur de progression -->
+    <div class="bg-white border-b border-border px-4 py-3">
+        <div class="flex items-center justify-between">
+            <div class="step-indicator active">
+                <span class="relative z-10 text-xs font-medium text-white">1</span>
+            </div>
+            <div class="step-indicator">
+                <span class="relative z-10 text-xs font-medium">2</span>
+            </div>
+            <div class="step-indicator">
+                <span class="relative z-10 text-xs font-medium">3</span>
+            </div>
+            <div class="step-indicator">
+                <span class="relative z-10 text-xs font-medium">4</span>
+            </div>
+            <div class="step-indicator">
+                <span class="relative z-10 text-xs font-medium">5</span>
+            </div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs text-textSecondary">
+            <span class="text-primary font-medium">Initialisation</span>
+            <span>Prestations</span>
+            <span>Financement</span>
+            <span>Conditions</span>
+            <span>Envoi</span>
+        </div>
+    </div>
+
+    <!-- Corps Principal -->
+    <div class="px-4 py-6">
+        <form id="wizardStep1Form" class="space-y-6">
+            
+            <!-- Section: Sélection du Chantier -->
+            <div class="bg-white rounded-lg shadow-sm border border-border p-4">
+                <h2 class="text-lg font-medium text-textPrimary mb-3">
+                    <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                    Chantier et Client
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Recherche/Sélection du chantier -->
+                    <div>
+                        <label class="block text-sm font-medium text-textSecondary mb-2">
+                            Chantier associé *
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="chantierSearch" 
+                                   placeholder="Rechercher un chantier..." 
+                                   class="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-textSecondary"></i>
+                        </div>
+                        <div id="chantierSearchResults" class="mt-2 space-y-2 hidden">
+                            <!-- Résultats de recherche générés dynamiquement -->
+                        </div>
+                        <div class="error-message" id="chantierError">Veuillez sélectionner un chantier</div>
+                    </div>
+                    
+                    <!-- Chantier sélectionné -->
+                    <div id="selectedChantier" class="hidden">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h3 id="selectedChantierName" class="font-medium text-blue-900"></h3>
+                                    <p id="selectedChantierAddress" class="text-sm text-blue-700 mt-1"></p>
+                                    
+                                    <!-- Informations client -->
+                                    <div class="mt-3 pt-3 border-t border-blue-200">
+                                        <h4 class="font-medium text-blue-900 mb-2">Propriétaire</h4>
+                                        <div class="flex items-center space-x-3">
+                                            <div id="selectedClientAvatar" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                                            </div>
+                                            <div>
+                                                <p id="selectedClientName" class="font-medium text-blue-900"></p>
+                                                <div class="flex items-center space-x-4 text-sm text-blue-700">
+                                                    <span id="selectedClientPhone"></span>
+                                                    <span id="selectedClientEmail"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Avertissement si identification incomplète -->
+                                    <div id="ownerWarning" class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg hidden">
+                                        <div class="flex items-center text-yellow-700">
+                                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                                            <span class="font-medium">Identification client incomplète</span>
+                                        </div>
+                                        <p class="text-sm text-yellow-600 mt-1">
+                                            Les informations du client devront être complétées avant l'envoi final du devis.
+                                        </p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="clearChantierSelection()" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Critères Techniques -->
+            <div class="bg-white rounded-lg shadow-sm border border-border p-4">
+                <h2 class="text-lg font-medium text-textPrimary mb-3">
+                    <i class="fas fa-cogs text-primary mr-2"></i>
+                    Critères Techniques
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Type de devis -->
+                    <div>
+                        <label class="block text-sm font-medium text-textSecondary mb-2">
+                            Type de devis *
+                        </label>
+                        <select id="typeDevis" class="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">Sélectionner un type</option>
+                            <option value="Paint">Peinture</option>
+                            <option value="Carrelage">Carrelage</option>
+                            <option value="Enduit">Enduit</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                        <div class="error-message" id="typeDevisError">Veuillez sélectionner un type de devis</div>
+                    </div>
+                    
+                    <!-- Critères spécifiques à la Peinture -->
+                    <div id="paintingCriteria" class="space-y-4 hidden">
+                        <!-- Niveau de finition -->
+                        <div>
+                            <label class="block text-sm font-medium text-textSecondary mb-2">
+                                Niveau de finition *
+                            </label>
+                            <div class="flex space-x-3">
+                                <button type="button" onclick="selectFinishingLevel('A')" 
+                                        class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors" 
+                                        id="finishingA">
+                                    <div class="font-medium">Finition A</div>
+                                    <div class="text-xs text-textSecondary">Parfaite</div>
+                                </button>
+                                <button type="button" onclick="selectFinishingLevel('B')" 
+                                        class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors" 
+                                        id="finishingB">
+                                    <div class="font-medium">Finition B</div>
+                                    <div class="text-xs text-textSecondary">Courante</div>
+                                </button>
+                                <button type="button" onclick="selectFinishingLevel('C')" 
+                                        class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors" 
+                                        id="finishingC">
+                                    <div class="font-medium">Finition C</div>
+                                    <div class="text-xs text-textSecondary">Simple</div>
+                                </button>
+                            </div>
+                            <div class="error-message" id="finishingLevelError">Veuillez sélectionner un niveau de finition</div>
+                        </div>
+                        
+                        <!-- Type de revêtement -->
+                        <div>
+                            <label class="block text-sm font-medium text-textSecondary mb-2">
+                                Type de revêtement *
+                            </label>
+                            <div class="flex space-x-3">
+                                <button type="button" onclick="selectCoveringType('MINCE')" 
+                                        class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors" 
+                                        id="coveringMince">
+                                    <div class="font-medium">Mince</div>
+                                    <div class="text-xs text-textSecondary">&lt; 3mm</div>
+                                </button>
+                                <button type="button" onclick="selectCoveringType('EPAIS')" 
+                                        class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors" 
+                                        id="coveringEpais">
+                                    <div class="font-medium">Épais</div>
+                                    <div class="text-xs text-textSecondary">&gt; 3mm</div>
+                                </button>
+                            </div>
+                            <div class="error-message" id="coveringTypeError">Veuillez sélectionner un type de revêtement</div>
+                        </div>
+                        
+                        <!-- Aspects de finition -->
+                        <div>
+                            <label class="block text-sm font-medium text-textSecondary mb-2">
+                                Aspects de finition * (Sélection multiple)
+                            </label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="toggleFinishingAspect('MATE')" 
+                                        class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" 
+                                        id="aspectMate">
+                                    Mate
+                                </button>
+                                <button type="button" onclick="toggleFinishingAspect('VELOURS')" 
+                                        class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" 
+                                        id="aspectVelours">
+                                    Velours
+                                </button>
+                                <button type="button" onclick="toggleFinishingAspect('SATINEE_BRILLANTE')" 
+                                        class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" 
+                                        id="aspectSatinee">
+                                    Satinée Brillante
+                                </button>
+                            </div>
+                            <div class="error-message" id="finishingAspectsError">Veuillez sélectionner au moins un aspect de finition</div>
+                        </div>
+                        
+                        <!-- Résultat de la recherche de modèle -->
+                        <div id="templateSearchResult" class="hidden">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <div class="flex items-center text-green-700 mb-2">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <span class="font-medium">Modèle trouvé</span>
+                                </div>
+                                <p id="templateName" class="text-sm text-green-600"></p>
+                                <p id="templateDescription" class="text-xs text-green-500 mt-1"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Erreur si aucun modèle trouvé -->
+                        <div id="templateError" class="hidden">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <div class="flex items-center text-red-700 mb-2">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    <span class="font-medium">Aucun modèle disponible</span>
+                                </div>
+                                <p class="text-sm text-red-600">
+                                    Aucun modèle de devis ne correspond à cette combinaison de critères. 
+                                    Veuillez modifier vos sélections ou contacter un administrateur.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Informations Générales -->
+            <div class="bg-white rounded-lg shadow-sm border border-border p-4">
+                <h2 class="text-lg font-medium text-textPrimary mb-3">
+                    <i class="fas fa-info-circle text-primary mr-2"></i>
+                    Informations Générales
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Objet du devis -->
+                    <div>
+                        <label for="objetDevis" class="block text-sm font-medium text-textSecondary mb-2">
+                            Objet du devis *
+                        </label>
+                        <input type="text" id="objetDevis" 
+                               placeholder="Ex: Rénovation peinture salon : murs en mat et boiseries en satiné"
+                               class="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                        <div class="error-message" id="objetDevisError">Veuillez saisir l'objet du devis</div>
+                    </div>
+                    
+                    <!-- Dates -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="dateEmission" class="block text-sm font-medium text-textSecondary mb-2">
+                                Date d'émission *
+                            </label>
+                            <input type="date" id="dateEmission" 
+                                   class="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <div class="error-message" id="dateEmissionError">Veuillez sélectionner la date d'émission</div>
+                        </div>
+                        
+                        <div>
+                            <label for="dateExpiration" class="block text-sm font-medium text-textSecondary mb-2">
+                                Date d'expiration *
+                            </label>
+                            <input type="date" id="dateExpiration" 
+                                   class="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <div class="error-message" id="dateExpirationError">Veuillez sélectionner la date d'expiration</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Numérotation -->
+                    <div>
+                        <label for="numeroDevis" class="block text-sm font-medium text-textSecondary mb-2">
+                            Numéro de devis
+                        </label>
+                        <input type="text" id="numeroDevis" readonly
+                               class="w-full px-4 py-2 border border-border rounded-lg bg-fieldDisabled text-textSecondary">
+                        <p class="text-xs text-textSecondary mt-1">
+                            Le numéro est généré automatiquement selon votre configuration
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Navigation en bas -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-border px-4 py-3">
+        <div class="flex justify-between items-center">
+            <button type="button" onclick="goBack()" 
+                    class="py-2 px-6 text-textSecondary font-medium">
+                Annuler
+            </button>
+            
+            <button type="button" onclick="nextStep()" 
+                    id="nextButton"
+                    class="bg-primary text-white py-2 px-6 rounded-lg font-medium disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors">
+                Suivant : Prestations
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="models/devis-models.js"></script>
+    <script src="data/devis-mock-data.js"></script>
+    <script src="js/wizard-step1.js"></script>
+</body>
+</html> 

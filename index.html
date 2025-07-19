@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MultiFlex - Gestion des Devis</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = {
+            autoReplaceSvg: 'nest',
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Base Styles -->
+    <style>
+        * {
+            font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Optimise les performances d'animation sur mobile */
+        * {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        /* Masquer la scrollbar tout en gardant la fonctionnalité */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Empêcher le texte d'être sélectionné sur les éléments d'UI */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Assurez-vous que tous les boutons et zones touch ont une taille minimale */
+        button, .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Animation de transition pour les filtres */
+        .filter-slide {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin 0.3s ease-in-out;
+        }
+        .filter-slide.show {
+            max-height: 350px;
+            opacity: 1;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Style du bouton flottant */
+        .fab {
+            box-shadow: 0 4px 10px rgba(38, 60, 137, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .fab:active {
+            transform: scale(0.95);
+        }
+        
+        /* Badge statut animations */
+        .badge-draft { @apply bg-gray-100 text-gray-700; }
+        .badge-sent { @apply bg-blue-100 text-blue-700; }
+        .badge-pending { @apply bg-yellow-100 text-yellow-700; }
+        .badge-accepted { @apply bg-green-100 text-green-700; }
+        .badge-refused { @apply bg-red-100 text-red-700; }
+        .badge-cancelled { @apply bg-gray-100 text-gray-500; }
+    </style>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#263c89',
+                        'primaryDark': '#1D2C61',
+                        'primaryLight': '#A8B1D3',
+                        'secondary': '#6db74c',
+                        'neutral': '#F8F9FA',
+                        'textPrimary': '#1A1A1A',
+                        'textSecondary': '#666666',
+                        'border': '#DEE2E6',
+                        'fieldDisabled': '#e4e7f0',
+                        'success': '#6db74c',
+                        'error': '#D9534F',
+                        'warning': '#F0AD4E',
+                        'info': '#0D6EFD'
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+
+<body class="bg-neutral min-h-screen">
+    <!-- AppBar -->
+    <div class="bg-primary text-white shadow-lg relative z-30">
+        <div class="flex items-center justify-between px-4 py-3">
+            <!-- Logo/Titre -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleDrawer()" class="md:hidden p-2 -ml-2 rounded-lg hover:bg-primaryDark transition-colors touch-target">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <img src="https://microfinance-ccm.com/iola/logo-blanc.png" alt="Multiflex" class="h-8">
+                <div class="hidden sm:block">
+                    <h1 class="text-lg font-bold">Gestion des Devis</h1>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleSearch()" class="p-2 rounded-lg hover:bg-primaryDark transition-colors touch-target">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button onclick="toggleFilters()" class="p-2 rounded-lg hover:bg-primaryDark transition-colors touch-target">
+                    <i class="fas fa-filter text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Bar (Hidden by default) -->
+        <div id="searchBar" class="bg-primaryDark px-4 py-3 hidden">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleSearch()" class="p-2 -ml-2 rounded-lg hover:bg-primary transition-colors touch-target">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </button>
+                <div class="flex-1 relative">
+                    <input type="text" id="searchInput" placeholder="Rechercher par nom, chantier, numéro..." 
+                           class="w-full bg-white text-textPrimary rounded-lg px-4 py-2 pr-10 focus:outline-none">
+                    <button onclick="clearSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-textSecondary hover:text-textPrimary">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres (Hidden by default) -->
+    <div id="filtersPanel" class="filter-slide bg-white border-b border-border px-4">
+        <div class="py-4 space-y-4">
+            <h3 class="font-medium text-textPrimary">Filtrer les devis</h3>
+            
+            <!-- Statut -->
+            <div>
+                <label class="block text-sm font-medium text-textSecondary mb-2">Statut</label>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="toggleStatusFilter('all')" class="status-filter active px-3 py-1 rounded-full text-sm bg-primary text-white">
+                        Tous
+                    </button>
+                    <button onclick="toggleStatusFilter('DRAFT')" class="status-filter px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                        Brouillon
+                    </button>
+                    <button onclick="toggleStatusFilter('SENT')" class="status-filter px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                        Envoyé
+                    </button>
+                    <button onclick="toggleStatusFilter('ACCEPTED')" class="status-filter px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                        Accepté
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Période -->
+            <div>
+                <label class="block text-sm font-medium text-textSecondary mb-2">Période</label>
+                <select id="periodFilter" class="w-full px-3 py-2 border border-border rounded-lg bg-white">
+                    <option value="all">Toutes les périodes</option>
+                    <option value="7days">7 derniers jours</option>
+                    <option value="30days">30 derniers jours</option>
+                    <option value="3months">3 derniers mois</option>
+                </select>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex space-x-3">
+                <button onclick="applyFilters()" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg font-medium">
+                    Appliquer
+                </button>
+                <button onclick="resetFilters()" class="flex-1 bg-gray-100 text-textPrimary py-2 px-4 rounded-lg font-medium">
+                    Réinitialiser
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Corps Principal -->
+    <div class="px-4 py-6">
+        <!-- Indicateurs de filtres actifs -->
+        <div id="activeFilters" class="mb-4 hidden">
+            <div class="flex flex-wrap gap-2">
+                <!-- Les badges de filtres seront ajoutés ici dynamiquement -->
+            </div>
+        </div>
+
+        <!-- Liste des Devis -->
+        <div id="devisList" class="space-y-3">
+            <!-- Les cartes de devis seront générées ici -->
+        </div>
+
+        <!-- État vide -->
+        <div id="emptyState" class="text-center py-12 hidden">
+            <i class="fas fa-file-invoice text-6xl text-gray-300 mb-4"></i>
+            <h3 class="text-lg font-medium text-textPrimary mb-2">Aucun devis trouvé</h3>
+            <p class="text-textSecondary mb-6">Commencez par créer votre premier devis</p>
+            <button onclick="createNewQuotation()" class="bg-primary text-white px-6 py-3 rounded-lg font-medium">
+                <i class="fas fa-plus mr-2"></i>
+                Créer un devis
+            </button>
+        </div>
+
+        <!-- Loading state -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p class="text-textSecondary mt-4">Chargement des devis...</p>
+        </div>
+    </div>
+
+    <!-- Bouton Flottant -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="createNewQuotation()" class="fab bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center touch-target">
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="models/devis-models.js"></script>
+    <script src="data/devis-mock-data.js"></script>
+    <script src="js/devis-list.js"></script>
+</body>
+</html> 

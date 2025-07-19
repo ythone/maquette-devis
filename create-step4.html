@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnalisation et Conditions - Multiflex Devis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .bg-primary { background-color: #263c89; }
+        .text-primary { color: #263c89; }
+        .border-primary { border-color: #263c89; }
+        .bg-success { background-color: #6db74c; }
+        .text-success { color: #6db74c; }
+        .bg-secondary { background-color: #F8F9FA; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-primary text-white p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <button onclick="goBack()" class="text-white">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </button>
+            <div>
+                <h1 class="text-lg font-bold">Personnalisation et Conditions</h1>
+                <p class="text-sm opacity-90">Étape 4 sur 5</p>
+            </div>
+        </div>
+        <button class="text-white" onclick="showHelp()">
+            <i class="fas fa-question-circle text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="bg-white px-4 py-2">
+        <div class="flex justify-between text-xs text-gray-600 mb-2">
+            <span>Initialisation</span>
+            <span>Prestations</span>
+            <span>Finalisation</span>
+            <span class="text-primary font-medium">Conditions</span>
+            <span>Envoi</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-primary h-2 rounded-full" style="width: 80%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Garantie -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Garantie</h2>
+                <i class="fas fa-shield-alt text-primary"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div id="warrantyInfo" class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-info-circle text-blue-500 mt-1"></i>
+                        <div class="text-sm">
+                            <p class="font-medium text-blue-800">Garantie Automatique</p>
+                            <p class="text-blue-600 mt-1" id="warrantyText">
+                                Garantie déterminée automatiquement selon le niveau de finition sélectionné.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Type de garantie</label>
+                    <select id="warrantyType" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" onchange="updateWarrantyType()">
+                        <option value="TRIENNALE">Garantie Triennale (3 ans)</option>
+                        <option value="BIENNALE">Garantie Biennale (2 ans)</option>
+                        <option value="ANNUELLE">Garantie Annuelle (1 an)</option>
+                        <option value="CUSTOM">Garantie Personnalisée</option>
+                    </select>
+                </div>
+                
+                <div id="customWarrantySection" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Durée personnalisée (mois)</label>
+                    <input type="number" id="customWarrantyDuration" min="1" max="60" value="12"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                           onchange="updateWarrantyType()">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Description de la garantie
+                        <span class="text-gray-500 text-xs">(optionnel)</span>
+                    </label>
+                    <textarea id="warrantyDescription" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="Ajoutez des détails spécifiques sur la garantie..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes et Conditions -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Notes et Conditions</h2>
+                <i class="fas fa-file-contract text-primary"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes contractuelles</label>
+                    <textarea id="contractualNotes" rows="4" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="Conditions particulières, modalités d'accès au chantier, contraintes techniques..."></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Prestations à la charge du client</label>
+                    <textarea id="clientResponsibilities" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                              placeholder="Ex: Nettoyage préalable, protection des meubles, fourniture d'électricité..."></textarea>
+                </div>
+                
+                <!-- Modèles de conditions prédéfinies -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Modèles de conditions</label>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button onclick="addPredefinedCondition('access')" 
+                                class="text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div class="font-medium text-sm">Conditions d'accès au chantier</div>
+                            <div class="text-xs text-gray-500">Accès libre, parking, horaires...</div>
+                        </button>
+                        <button onclick="addPredefinedCondition('preparation')" 
+                                class="text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div class="font-medium text-sm">Préparation du support</div>
+                            <div class="text-xs text-gray-500">Nettoyage, protection, déplacement mobilier...</div>
+                        </button>
+                        <button onclick="addPredefinedCondition('weather')" 
+                                class="text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div class="font-medium text-sm">Conditions météorologiques</div>
+                            <div class="text-xs text-gray-500">Report en cas d'intempéries...</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Médias -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Médias d'Illustration</h2>
+                <i class="fas fa-images text-primary"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Ajoutez des photos pour illustrer votre devis et rassurer le client sur la qualité attendue.
+                </div>
+                
+                <!-- Actions d'ajout de médias -->
+                <div class="grid grid-cols-1 gap-3">
+                    <button onclick="addMediaFromGallery()" 
+                            class="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-gray-50">
+                        <div class="text-center">
+                            <i class="fas fa-folder-open text-2xl text-gray-400 mb-2"></i>
+                            <div class="font-medium text-gray-700">Depuis la galerie du chantier</div>
+                            <div class="text-sm text-gray-500">Photos de la démo existante</div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="addMediaFromDevice()" 
+                            class="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-gray-50">
+                        <div class="text-center">
+                            <i class="fas fa-camera text-2xl text-gray-400 mb-2"></i>
+                            <div class="font-medium text-gray-700">Depuis mon appareil</div>
+                            <div class="text-sm text-gray-500">Prendre ou choisir une photo</div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="generateAIImage()" 
+                            class="flex items-center justify-center p-4 border-2 border-dashed border-primary rounded-lg hover:bg-blue-50">
+                        <div class="text-center">
+                            <i class="fas fa-magic text-2xl text-primary mb-2"></i>
+                            <div class="font-medium text-primary">Générer avec l'IA</div>
+                            <div class="text-sm text-blue-600">Créer une image de rendu</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- Liste des médias ajoutés -->
+                <div id="mediaList" class="space-y-3">
+                    <!-- Les médias seront ajoutés ici dynamiquement -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Certifications et Labels</h2>
+                <i class="fas fa-award text-primary"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="text-sm text-gray-600">
+                    Sélectionnez les certifications que vous souhaitez afficher sur ce devis pour renforcer votre crédibilité.
+                </div>
+                
+                <div id="certificationsList" class="space-y-3">
+                    <!-- Les certifications seront chargées dynamiquement -->
+                </div>
+                
+                <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                    <span class="text-yellow-800">
+                        Seules les certifications validées par votre manager peuvent être affichées.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prévisualisation -->
+        <div class="bg-white mx-4 mt-4 rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Prévisualisation</h2>
+                <button onclick="refreshPreview()" class="text-primary hover:underline text-sm">
+                    <i class="fas fa-sync-alt mr-1"></i>
+                    Actualiser
+                </button>
+            </div>
+            
+            <div class="text-sm text-gray-600 mb-3">
+                Aperçu de la section conditions qui apparaîtra dans votre devis :
+            </div>
+            
+            <div id="conditionsPreview" class="bg-gray-50 p-4 rounded-lg border-l-4 border-primary">
+                <!-- Prévisualisation sera générée ici -->
+            </div>
+        </div>
+
+        <!-- Bottom Spacer -->
+        <div class="h-24"></div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div class="flex space-x-3">
+            <button onclick="goBack()" class="flex-1 py-3 px-4 bg-gray-200 text-gray-700 rounded-lg font-medium">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Précédent
+            </button>
+            <button id="nextButton" onclick="goToStep5()" class="flex-1 py-3 px-4 bg-primary text-white rounded-lg font-medium">
+                Suivant : Prévisualisation
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Image Generation Modal -->
+    <div id="aiImageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Génération d'Image IA</h3>
+                    <button onclick="closeAIModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Décrivez l'image souhaitée
+                        </label>
+                        <textarea id="aiPrompt" rows="4" 
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                  placeholder="Ex: Salon moderne et lumineux avec un mur d'accent peint en bleu nuit satiné, mobilier design scandinave"></textarea>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button onclick="closeAIModal()" 
+                                class="flex-1 py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            Annuler
+                        </button>
+                        <button onclick="generateImage()" 
+                                class="flex-1 py-2 px-4 bg-primary text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-magic mr-2"></i>
+                            Générer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Preview Modal -->
+    <div id="mediaPreviewModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="relative max-w-4xl max-h-full">
+                <button onclick="closeMediaPreview()" 
+                        class="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 z-10">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="mediaPreviewImage" src="" alt="Aperçu média" class="max-w-full max-h-full rounded-lg">
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="models/devis-models.js"></script>
+    <script src="data/devis-mock-data.js"></script>
+    <script src="js/wizard-step4.js"></script>
+</body>
+</html> 
