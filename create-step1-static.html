@@ -308,14 +308,14 @@
                     </div>
                     
                     <!-- Critères spécifiques à la Peinture -->
-                    <div id="paintingCriteria" class="space-y-4 hidden">
+                    <div id="paintingCriteria" class="space-y-4">
                         <!-- Niveau de finition -->
                         <div>
                             <label class="block text-sm font-medium text-textSecondary mb-2">
                                 Niveau de finition *
                             </label>
                             <div class="flex space-x-3">
-                                <button type="button" onclick="selectFinishingLevel('A')" class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors bg-white text-textPrimary" id="finishingA">
+                                <button type="button" onclick="selectFinishingLevel('A')" class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors bg-primary text-white" id="finishingA">
                                     <div class="font-medium">Finition A</div>
                                     <div class="text-xs text-textSecondary">Parfaite</div>
                                 </button>
@@ -337,7 +337,7 @@
                                 Type de revêtement *
                             </label>
                             <div class="flex space-x-3">
-                                <button type="button" onclick="selectCoveringType('MINCE')" class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors bg-white text-textPrimary" id="coveringMince">
+                                <button type="button" onclick="selectCoveringType('MINCE')" class="flex-1 py-2 px-4 rounded-lg border border-border text-center transition-colors bg-primary text-white" id="coveringMince">
                                     <div class="font-medium">Mince</div>
                                     <div class="text-xs text-textSecondary">&lt; 3mm</div>
                                 </button>
@@ -355,13 +355,13 @@
                                 Aspects de finition * (Sélection multiple)
                             </label>
                             <div class="flex flex-wrap gap-2">
-                                <button type="button" onclick="toggleFinishingAspect('MATE')" class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" id="aspectMate">
+                                <button type="button" onclick="toggleFinishingAspect('MATE')" class="aspect-chip px-3 py-2 rounded-full text-sm font-medium selected" id="aspectMate">
                                     Mate
                                 </button>
                                 <button type="button" onclick="toggleFinishingAspect('VELOURS')" class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" id="aspectVelours">
                                     Velours
                                 </button>
-                                <button type="button" onclick="toggleFinishingAspect('SATINEE_BRILLANTE')" class="aspect-chip px-3 py-2 rounded-full text-sm font-medium" id="aspectSatinee">
+                                <button type="button" onclick="toggleFinishingAspect('SATINEE_BRILLANTE')" class="aspect-chip px-3 py-2 rounded-full text-sm font-medium selected" id="aspectSatinee">
                                     Satinée Brillante
                                 </button>
                             </div>
@@ -369,14 +369,14 @@
                         </div>
                         
                         <!-- Résultat de la recherche de modèle -->
-                        <div id="templateSearchResult" class="hidden">
+                        <div id="templateSearchResult" class="">
                             <div class="bg-green-50 border border-green-200 rounded-lg p-4">
                                 <div class="flex items-center text-green-700 mb-2">
                                     <i class="mr-2" data-fa-i2svg=""><svg class="svg-inline--fa fa-circle-check" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg></i>
                                     <span class="font-medium">Modèle trouvé</span>
                                 </div>
-                                <p id="templateName" class="text-sm text-green-600"></p>
-                                <p id="templateDescription" class="text-xs text-green-500 mt-1"></p>
+                                <p id="templateName" class="text-sm text-green-600">Finition A - Revêtement Mince - Mate/Velours/Satinée (Complet)</p>
+                                <p id="templateDescription" class="text-xs text-green-500 mt-1">Modèle de devis complet pour finition parfaite avec revêtement mince, incluant tous les aspects mate, velours et satinée brillante avec tous les procédés détaillés</p>
                             </div>
                         </div>
                         
